@@ -30,7 +30,7 @@ pipeline {
   }
 }
 
-###for email generation
+
 post {
     success {
         emailext(
