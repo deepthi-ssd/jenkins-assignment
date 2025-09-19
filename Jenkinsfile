@@ -29,3 +29,42 @@ pipeline {
     failure { echo 'Pipeline failed' }
   }
 }
+
+###for email generation
+post {
+    success {
+        emailext(
+            to: 'raimund@rittnauer.at',
+            subject: "✅ SUCCESS: Jenkins Build #${env.BUILD_NUMBER}",
+            body: """Hello Team,
+
+The build succeeded for job: ${env.JOB_NAME}
+Build number: ${env.BUILD_NUMBER}
+Build URL: ${env.BUILD_URL}
+
+Regards,
+Jenkins
+"""
+        )
+    }
+    failure {
+        emailext(
+            to: 'raimund@rittnauer.at',
+            subject: "❌ FAILURE: Jenkins Build #${env.BUILD_NUMBER}",
+            body: """Hello Team,
+
+The build failed for job: ${env.JOB_NAME}
+Build number: ${env.BUILD_NUMBER}
+Build URL: ${env.BUILD_URL}
+
+Please check the console output for details.
+
+Regards,
+Jenkins
+"""
+        )
+    }
+}
+
+
+
